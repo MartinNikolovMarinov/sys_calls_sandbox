@@ -54,6 +54,7 @@
         "stdarg.h": "c",
         "types.h": "c",
         "raw_str.h": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "syscall_table.h": "c"
     }
 }
