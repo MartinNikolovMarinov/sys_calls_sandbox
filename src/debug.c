@@ -1,7 +1,10 @@
 #include "debug.h"
 
-void __assertFailedHandler(char *file, i32 line) {
+#if defined(DEBUG) && (DEBUG == 1)
+
+void __assertFailedHandler(char *file, i32 line, char *failMsg) {
     i64 flen = strLen(file);
+    i64 fmlen = strLen(failMsg);
     char lineNumStr[500]; // TODO: fix when fix sized arrays are implemented.
     i64 wrote = int32ToChar(lineNumStr, line);
 
@@ -10,7 +13,11 @@ void __assertFailedHandler(char *file, i32 line) {
     syswrite(STDOUT, file, flen);
     syswrite(STDOUT, "; line: ", 8);
     syswrite(STDOUT, lineNumStr, wrote);
+    syswrite(STDOUT, "; msg: ", 7);
+    syswrite(STDOUT, failMsg, fmlen);
     syswrite(STDOUT, "\n", 1);
 
     *(int *)0 = 0; // Crash the program by dereferencing address 0.
 }
+
+#endif

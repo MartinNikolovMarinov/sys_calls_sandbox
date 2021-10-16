@@ -44,4 +44,12 @@ typedef i8 bool8;
 #define SUCCESS 0
 #define FAIL -1
 
+// Storage Sizes
+#define BYTE        ((i64)1)
+#define KILOBYTE    ((i64)(1000 * BYTE))
+#define MEGABYTE    ((i64)(1000 * KILOBYTE))
+#define GIGABYTE    ((i64)(1000 * MEGABYTE))
+#define TERABYTE    ((i64)(1000 * GIGABYTE))
+
+
 #endif /* TYPES_H */

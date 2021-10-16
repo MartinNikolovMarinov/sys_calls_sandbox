@@ -8,6 +8,9 @@
 
 i32 main(i32 argc, char** argv, char **envp)
 {
+    // TODO2: Start with implementing basic safe types.
+
+    // TODO: make some structure to hold passed arguments.
     // char buf[10];
     // for (i32 i = 0; i < argc; i++)
     // {
@@ -21,29 +24,30 @@ i32 main(i32 argc, char** argv, char **envp)
     //     }
     // }
 
-    // i32 ret = initMemPool();
-    // i32* integer = (i32*)allocate(4);
-    // char* character = (char*)allocate(1);
+    i32 ret = initMemPool();
+    i32* integer = (i32*)allocate(100 * GIGABYTE);
+    char* character = (char*)allocate(1);
 
-    // *integer = 0xFFFFFFF4;
-    // *character = 'p';
+    i32 bAlloced = bytesAllocated();
 
-    // *(character + 1) = 'c';
-    // ret = shrink(sizeof(char));
+    // *integer = 0xFFFFFFFF;
+    *character = 'p';
 
-    // *character = 't';
+    ret = deallocate(sizeof(char));
+
+    bAlloced = bytesAllocated();
+
+    clearMemoryPool();
+    bAlloced = bytesAllocated();
 
     // TODO: make some structure to hold the environment variables.
-    for (char **env = envp; *env != null; env++)
-    {
-        char *curr = *env;
-        i64 currLen = strLen(curr);
-        syswrite(STDOUT, curr, currLen);
-        syswrite(STDOUT, "\n", 1);
-    }
+    // for (char **env = envp; *env != null; env++)
+    // {
+    //     char *curr = *env;
+    //     i64 currLen = strLen(curr);
+    //     syswrite(STDOUT, curr, currLen);
+    //     syswrite(STDOUT, "\n", 1);
+    // }
 
-    syswrite(STDOUT, "\n", 1);
-    assert(false);
-    syswrite(STDOUT, "\n", 1);
     return 0;
 }
