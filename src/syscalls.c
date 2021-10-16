@@ -1,6 +1,6 @@
 #include "syscalls.h"
 
-i64 write(i64 fd, void const* data, u64 nbytes)
+i64 syswrite(i64 fd, void *data, u64 nbytes)
 {
     i64 res = (i64)syscall(SYSCALL_write,
                      (void*)fd,
@@ -9,4 +9,10 @@ i64 write(i64 fd, void const* data, u64 nbytes)
                      0, /* ignored */
                      0  /* ignored */);
     return res;
+}
+
+void* sysbrk(void *addr)
+{
+    void* ret = (void*)syscall(SYSCALL_brk, addr, 0, 0, 0, 0);
+    return ret;
 }

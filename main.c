@@ -3,57 +3,10 @@
 #include "src/syscalls.h"
 #include "src/raw_str.h"
 #include "src/integers.h"
+#include "src/allocator.h"
+#include "src/debug.h"
 
-// Block *requestFromOS(size_t size) {
-//   auto block = (Block *)sbrk(0);                // (1)
-
-//   syscall(SYSCALL_brk, 0, 0, 0, 0, 0);
-//   sbrk()
-
-//   // OOM.
-//   if (sbrk(allocSize(size)) == (void *)-1) {    // (2)
-//     return nullptr;
-//   }
-
-//   return block;
-// }
-
-/*
-    IMPORTANT:
-
-    If successful, brk() returns 0.
-
-    If unsuccessful, brk() returns -1 and sets errno to one of the following values:
-    Error Code
-        Description
-    ENOMEM
-        The requested change would allocate more space than allowed for the calling process.
-
- */
-
-static void *memorypool;
-
-i32 initMemPool() {
-    memorypool = (struct MemBlock*)syscall(SYSCALL_brk, 0, 0, 0, 0, 0);
-    if (memorypool < 0) return -1;
-    return 1;
-}
-
-void* allocate(int n) {
-    if (n == 0) return memorypool;
-    void *old = memorypool;
-    memorypool = (void*)syscall(SYSCALL_brk, memorypool + n, 0, 0, 0, 0);
-    if (memorypool < 0) return (void*)-1;
-    return old;
-}
-
-i32 resetMemPool(){
-    void* res = syscall(SYSCALL_brk, memorypool, 0, 0, 0, 0);
-    if (res < 0) return -1;
-    return 1;
-}
-
-i32 main(i32 argc, char** argv)
+i32 main(i32 argc, char** argv, char **envp)
 {
     // char buf[10];
     // for (i32 i = 0; i < argc; i++)
@@ -68,14 +21,29 @@ i32 main(i32 argc, char** argv)
     //     }
     // }
 
-    initMemPool();
-    int* integer = (int*)allocate(4);
-    char* character = (char*)allocate(1);
+    // i32 ret = initMemPool();
+    // i32* integer = (i32*)allocate(4);
+    // char* character = (char*)allocate(1);
 
-    *integer = 0xFFFFFFF4;
-    *character = 'p';
+    // *integer = 0xFFFFFFF4;
+    // *character = 'p';
 
-    *(character + 1) = 'c';
+    // *(character + 1) = 'c';
+    // ret = shrink(sizeof(char));
 
+    // *character = 't';
+
+    // TODO: make some structure to hold the environment variables.
+    for (char **env = envp; *env != null; env++)
+    {
+        char *curr = *env;
+        i64 currLen = strLen(curr);
+        syswrite(STDOUT, curr, currLen);
+        syswrite(STDOUT, "\n", 1);
+    }
+
+    syswrite(STDOUT, "\n", 1);
+    assert(false);
+    syswrite(STDOUT, "\n", 1);
     return 0;
 }

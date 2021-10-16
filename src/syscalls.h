@@ -4,6 +4,7 @@
 #include "syscall_table.h"
 #include "types.h"
 
-i64 write(i64 fd, void const* data, u64 nbytes);
+i64 syswrite(i64 fd, void *data, u64 nbytes);
+void* sysbrk(void *add);
 
 #endif

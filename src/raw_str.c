@@ -1,5 +1,6 @@
 #include "raw_str.h"
 
+i64 int32ToChar(char* out, i32 n) { return int64ToChar(out, n); }
 i64 int64ToChar(char* out, i64 n)
 {
     if (out == null) {
@@ -35,17 +36,7 @@ u64 strLen(char* p)
 }
 
 /*
-    Least significat digit of i32 to character.
+    Get the Least Significat Digit of an integer and cast to character.
 */
-char lsdI32ToChar(i32 digit)
-{
-    return (digit % 10) + '0';
-}
-
-/*
-    Least significat digit of i64 to character.
-*/
-char lsdI64ToChar(i64 digit)
-{
-    return (digit % 10) + '0';
-}
+char lsdI32ToChar(i32 digit) { return (digit % 10) + '0'; }
+char lsdI64ToChar(i64 digit) { return (digit % 10) + '0'; }

@@ -40,4 +40,8 @@ typedef i8 bool8;
 #define STDOUT 1
 #define STDERR 2
 
+// TODO: Devies a more sophisticated error handling strategy:
+#define SUCCESS 0
+#define FAIL -1
+
 #endif /* TYPES_H */

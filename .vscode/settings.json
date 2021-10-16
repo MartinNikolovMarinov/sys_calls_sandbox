@@ -55,6 +55,9 @@
         "types.h": "c",
         "raw_str.h": "c",
         "math.h": "c",
-        "syscall_table.h": "c"
+        "syscall_table.h": "c",
+        "allocator.h": "c",
+        "debug.h": "c",
+        "syscalls.h": "c"
     }
 }

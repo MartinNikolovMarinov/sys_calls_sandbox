@@ -4,5 +4,6 @@
 #include "types.h"
 
 i32 digitCountI64(i64 n);
+i32 digitCountI32(i32 n);
 
 #endif
