@@ -20,7 +20,7 @@ i64 int64ToChar(char* out, i64 n)
     return wroteDigits;
 }
 
-u64 strLen(char* p)
+u64 rawStrLen(char* p)
 {
     if (p == null) {
         return 0;

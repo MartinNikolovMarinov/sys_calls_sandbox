@@ -5,7 +5,7 @@
 #include "math.h"
 #include "integers.h"
 
-u64 strLen(char* p);
+u64 rawStrLen(char* p);
 i64 int32ToChar(char* out, i32 n);
 i64 int64ToChar(char* out, i64 n);
 char lsdI32ToChar(i32 digit);

@@ -5,6 +5,8 @@
 #include "syscalls.h"
 #include "debug.h"
 
+typedef void* (*allocatorFn)(i64 n);
+
 i32 initMemPool();
 i32 clearMemoryPool();
 void* allocate(i64 n);

@@ -5,6 +5,7 @@
 #include "types.h"
 
 i64 syswrite(i64 fd, void *data, u64 nbytes);
+void sysexit(i64 code);
 void* sysbrk(void *add);
 
 #endif

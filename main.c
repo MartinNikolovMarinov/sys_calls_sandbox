@@ -5,6 +5,8 @@
 #include "src/integers.h"
 #include "src/allocator.h"
 #include "src/debug.h"
+#include "src/err.h"
+#include "src/print.h"
 
 i32 main(i32 argc, char** argv, char **envp)
 {
@@ -24,21 +26,22 @@ i32 main(i32 argc, char** argv, char **envp)
     //     }
     // }
 
-    i32 ret = initMemPool();
-    i32* integer = (i32*)allocate(100 * GIGABYTE);
-    char* character = (char*)allocate(1);
+    // TODO: update memory pool to be able to free memory.
+    // i32 ret = initMemPool();
+    // i32* integer = (i32*)allocate(sizeof(i32));
+    // char* character = (char*)allocate(sizeof(char));
 
-    i32 bAlloced = bytesAllocated();
+    // i32 bAlloced = bytesAllocated();
 
     // *integer = 0xFFFFFFFF;
-    *character = 'p';
+    // *character = 'p';
 
-    ret = deallocate(sizeof(char));
+    // ret = deallocate(sizeof(char));
 
-    bAlloced = bytesAllocated();
+    // bAlloced = bytesAllocated();
 
-    clearMemoryPool();
-    bAlloced = bytesAllocated();
+    // clearMemoryPool();
+    // bAlloced = bytesAllocated();
 
     // TODO: make some structure to hold the environment variables.
     // for (char **env = envp; *env != null; env++)
@@ -48,6 +51,24 @@ i32 main(i32 argc, char** argv, char **envp)
     //     syswrite(STDOUT, curr, currLen);
     //     syswrite(STDOUT, "\n", 1);
     // }
+
+    char *banica = "banica";
+    String s1 = strMakeFromCharPtr(banica);
+    char buff[20];
+    String s2 = strMake(buff, 0, 20);
+    Error err;
+
+    strCopy(&s1, &s2);
+    strAdd(&s2, &s1);
+
+    if (!isSuccess(printStr(&s1)))
+        sysexit(-1);
+    if (!isSuccess(printRawStr("\n", 0)))
+        sysexit(-1);
+    if (!isSuccess(printStr(&s2)))
+        sysexit(-1);
+    if (!isSuccess(printRawStr("\n", 0)))
+        sysexit(-1);
 
     return 0;
 }
