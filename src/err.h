@@ -11,7 +11,8 @@ typedef struct Error {
     String *msg;
 } Error;
 
-Error makeErr(i32 code, String *msg);
+Error makeErr(i32 code, char *raw);
+Error makeErrStr(i32 code, String *msg);
 Error makeSuccess();
 bool8 isSuccess(Error e);
 

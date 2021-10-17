@@ -6,11 +6,9 @@ Error printRawStr(char *str, u64 len) {
     }
     i64 wrote = syswrite(STDOUT, str, len);
     if (wrote < 0) {
-        String msg = strMakeFromCharPtr("write failed");
-        return makeErr(-1, &msg);
+        return makeErr(-1, "write failed");
     } else if (wrote != len) {
-        String msg = strMakeFromCharPtr("short write");
-        return makeErr(-2, &msg);
+        return makeErr(-2, "short write");
     }
 
     return makeSuccess();

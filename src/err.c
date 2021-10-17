@@ -1,6 +1,12 @@
 #include "err.h"
 
-Error makeErr(i32 code, String *msg) {
+Error makeErr(i32 code, char *raw) {
+    String msg = strMakeFromCharPtr(raw);
+    Error ret = { .errorCode = code, .msg = &msg };
+    return ret;
+}
+
+Error makeErrStr(i32 code, String *msg) {
     Error ret = { .errorCode = code, .msg = msg };
     return ret;
 }
