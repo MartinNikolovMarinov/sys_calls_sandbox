@@ -1,114 +1,84 @@
 #include "str.h"
 
-String strMake(char* buff, i64 size, i64 cap) {
-    assert(buff != null, "buff argument can't be null");
-    assert(size >= 0, "size can't be less than 0");
-    assert(cap >= 0, "cap can't be less than 0");
-    assert(cap >= size, "cap must be greater than or equal to size");
+void StrConcat(modtptr String *out, constptr String *strs...) {
+    // TODO: implement asserts...
 
-    String ret = { ._size = size, ._cap = cap, ._data = buff, };
-    return ret;
+    va_list va;
+    va_start(va, strs);
+
+    for (String *s = (String *)strs; s != null; s = va_arg(va, String*)) {
+        out->Add(s);
+    }
+
+    va_end(va);
+    return;
 }
 
-String strMakeFromCharPtr(char* buff) {
-    assert(buff != null, "buff argument can't be null");
-    i64 len = rawStrLen(buff);
-    assert(len > 0, "len can't be null");
+String::String(modtptr char* _raw) {
+    assert(_raw != null);
 
-    String ret = { ._size = len, ._cap = len, ._data = buff, };
-    return ret;
+    u64 len = StrLen(_raw);
+    this->cap = len;
+    this->size = len;
+    this->data = _raw;
 }
 
-i64 strSize(String *v) {
-    i64 ret = v == null ? 0 : v->_size;
-    return ret;
+String::String(modtptr char* _raw, i64 _size, i64 _cap) {
+    assert(_raw != null);
+    assert(_size >= 0);
+    assert(_cap >= 0);
+    assert(_cap >= _size);
+
+    this->cap = _cap;
+    this->size = _size;
+    this->data = _raw;
 }
 
-i64 strCap(String *v) {
-    i64 ret = v == null ? 0 : v->_cap;
-    return ret;
+String::String(modtptr String* _other) {
+    assert(_other != null);
+    assert(_other->data != null);
+
+    this->cap = _other->cap;
+    this->size = _other->size;
+    this->data = _other->data;
 }
 
-void strCopy(String *src, String *dest) {
-    assert(src != null, "src argument can't be null");
-    assert(dest != null, "dest argument can't be null");
+i32 String::Cap()  { return this->cap;  }
+i32 String::Size() { return this->size; }
 
-    i64 i = 0;
-    while (true) {
-        if (i >= src->_size || i >= dest->_cap) {
-            break;
-        }
-        strAddChar(dest, src->_data[i]);
+void String::SetAt(i32 _index, char _v) {
+    assertm((0 < _index && _index < this->size), "_index argument is in an invalid range");
+
+    this->data[_index] = _v;
+}
+
+void String::SetAt(String* _other, i32 _index) {
+    assert(_other != null);
+    assertm((0 < _index && _index < this->size), "_index argument is in an invalid range");
+    assertm((this->size + _index + _other->size >= this->cap), "not enough capacity to add _other string at _index");
+
+    for (i64 i = 0; i < _other->size; i++)
+    {
+        this->data[i + this->size + _index] = _other->data[i];
+    }
+}
+
+void String::Add(char _v) {
+    assertm((this->size + 1 <= this->cap), "trying to add a character past capacity");
+
+    this->data[this->size] = _v;
+    this->size++;
+}
+
+void String::Add(String *_other) {
+    assert(_other != null);
+    assertm((this->size + _other->size <= this->cap), "trying to add a string past capacity");
+
+    i32 i = 0;
+    while (i < _other->size)
+    {
+        this->data[i + this->size] = _other->data[i];
         i++;
     }
-}
-
-void strConcat(String *a, String *b, String *out) {
-    assert(a != null, "a argument can't be null");
-    assert(b != null, "b argument can't be null");
-    assert(out != null, "out argument can't be null");
-    assert(a->_size + b->_size <= out->_cap, "out argument does not have enough space for the concatenation.");
-
-    i64 i, outIndex;
-    for (i = 0; i < a->_size; i++)
-    {
-        out->_data[outIndex] = a->_data[i];
-        outIndex++;
-    }
-    for (i = 0; i < a->_size; i++)
-    {
-        out->_data[outIndex] = a->_data[i];
-        outIndex++;
-    }
-    out->_size = outIndex;
-}
-
-void strSetCharAt(String *src, i64 i, char a) {
-    assert(src != null, "src argument can't be null");
-    assert(isInRangeI64(0, i, src->_size), "i argument is in an invalid range");
-
-    src->_data[i] = a;
-}
-
-void strAddChar(String *src, char a) {
-    assert(src != null, "src argument can't be null");
-    assert(src->_size + 1 <= src->_cap, "trying to add a character past the capacity of the string");
-
-    src->_data[src->_size] = a;
-    src->_size++;
-}
-
-void strSetAt(String *src, i64 srci, String *dest) {
-    assert(src != null, "src argument can't be null");
-    assert(dest != null, "dest argument can't be null");
-    assert(isInRangeI64(0, srci, src->_size), "srci argument is in an invalid range");
-    assert(src->_size + srci + dest->_size >= src->_cap,
-        "src string does not have enough capacity to add dest string at that location");
-
-    i64 ssize = src->_size;
-    char* sdata = src->_data;
-    i64 dsize = dest->_size;
-    char* ddata = dest->_data;
-    for (i64 i = 0; i < dsize; i++)
-    {
-        sdata[i + ssize + srci] = ddata[i];
-    }
-}
-
-void strAdd(String *src, String *dest) {
-    assert(src != null, "src argument can't be null");
-    assert(dest != null, "dest argument can't be null");
-    assert(src->_size + dest->_size <= src->_cap, "src string does not have enough capacity to add dest string");
-
-    i64 ssize = src->_size;
-    char* sdata = src->_data;
-    i64 dsize = dest->_size;
-    char* ddata = dest->_data;
-    for (i64 i = 0; i < dsize; i++)
-    {
-        sdata[i + ssize] = ddata[i];
-        src->_size++;
-    }
-
-    assert(src->_size <= src->_cap, "sanity check failed");
+    this->size += i;
 }

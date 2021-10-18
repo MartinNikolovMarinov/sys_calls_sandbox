@@ -3,9 +3,11 @@
 
 #include "types.h"
 
-i64 powI32(i32 n, i32 power);
-i64 powI64(i64 n, i32 power);
-f32 powF32(f32 n, i32 power);
-f64 powF64(f64 n, i32 power);
+#define PI32 3.14159265359f
+
+i64 PowI32(i32 n, i32 power);
+i64 PowI64(i64 n, i32 power);
+f32 PowF32(f32 n, i32 power);
+f64 PowF64(f64 n, i32 power);
 
 #endif

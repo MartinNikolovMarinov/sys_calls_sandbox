@@ -8,9 +8,13 @@
 
     void __assertFailedHandler(constptr char *file, i32 line, constptr char* expr, constptr char* failMsg);
 
-    #define assert(expr, failMsg)                                           \
+    #define assert(expr)                                                    \
         if (!(expr))                                                        \
-            __assertFailedHandler(__FILE__, __LINE__, #expr, failMsg)
+            __assertFailedHandler(__FILE__, __LINE__, #expr, "")
+
+    #define assertm(expr, errMsg)                                           \
+        if (!(expr))                                                        \
+            __assertFailedHandler(__FILE__, __LINE__, #expr, errMsg)
 #else
     #define assert(expr)
 #endif

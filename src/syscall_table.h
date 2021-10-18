@@ -3,7 +3,7 @@
 
 #ifdef __cplusplus
     extern "C" {
-        extern void* syscall(
+        void* syscall(
             int syscall_number,
             void* param1,
             void* param2,
@@ -22,7 +22,6 @@
         void* param5
     );
 #endif
-
 
 #define SYSCALL_read 0
 #define SYSCALL_write 1

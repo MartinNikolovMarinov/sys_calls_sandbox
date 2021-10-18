@@ -6,20 +6,23 @@
 #include "debug.h"
 #include "integers.h"
 
-typedef struct String {
-    i64 _size, _cap;
-    char *_data;
-} String;
+class String {
+public:
+    String(modtptr char* _raw);
+    String(modtptr char* _raw, i64 _size, i64 _cap);
+    String(modtptr String* _other);
 
-String strMake(char* buff, i64 size, i64 cap);
-String strMakeFromCharPtr(char* buff);
-i64 strSize(String *v);
-i64 strCap(String *v);
-void strCopy(String *src, String *dest);
-void strConcat(String *a, String *b, String *out);
-void strSetCharAt(String *src, i64 i, char a);
-void strAddChar(String *src, char a);
-void strSetAt(String *src, i64 srci, String *dest);
-void strAdd(String *src, String *dest);
+    i32 Size();
+    i32 Cap();
+    void SetAt(i32 _i, char _v);
+    void SetAt(String* _other, i32 _i);
+    void Add(char v);
+    void Add(String* _other);
+private:
+    i32 size, cap;
+    char* data;
+};
+
+void StrConcat(modtptr String *out, constptr String *strs...);
 
 #endif

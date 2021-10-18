@@ -1,18 +1,21 @@
 #include "raw_str.h"
 
-i64 int32ToChar(char* out, i32 n) { return int64ToChar(out, n); }
-i64 int64ToChar(char* out, i64 n)
+char LeastSignificatDigitI32ToChar(i32 digit) { return (digit % 10) + '0'; }
+char LeastSignificatDigitI64ToChar(i64 digit) { return (digit % 10) + '0'; }
+
+i64 I32ToChar(char* out, i32 n) { return I64ToChar(out, n); }
+i64 I64ToChar(char* out, i64 n)
 {
     if (out == null) {
         return -1;
     }
 
     i64 wroteDigits = 0;
-    i32 dc = digitCountI64(n);
+    i32 dc = DigitCountI64(n);
     for (i32 i = dc - 1; i >= 0; i--)
     {
-        i32 curr = (n / powI32(10, i)) % 10;
-        *out = lsdI64ToChar(curr);
+        i32 curr = (n / PowI32(10, i)) % 10;
+        *out = LeastSignificatDigitI64ToChar(curr);
         out++;
         wroteDigits++;
     }
@@ -20,7 +23,7 @@ i64 int64ToChar(char* out, i64 n)
     return wroteDigits;
 }
 
-u64 rawStrLen(constptr char* p)
+u64 StrLen(constptr char* p)
 {
     if (p == null) {
         return 0;
@@ -34,9 +37,3 @@ u64 rawStrLen(constptr char* p)
 
     return count;
 }
-
-/*
-    Get the Least Significat Digit of an integer and cast to character.
-*/
-char lsdI32ToChar(i32 digit) { return (digit % 10) + '0'; }
-char lsdI64ToChar(i64 digit) { return (digit % 10) + '0'; }

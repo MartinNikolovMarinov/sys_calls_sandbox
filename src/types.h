@@ -1,20 +1,14 @@
 #ifndef TYPES_H
 #define TYPES_H 1
 
-#define local_persist static
-#define global_variable static
-/*
-    IMPORTANT: (UNITY BUILD)
-    If you don't mark a functions static, then the compiler needs to put it in a
-    special symbol table for the linker. We don't care about it, because in a
-    UNITY BUILD the linker will see only one file. So we can avoid the overhead
-    of this special symbol table. This will make compilation faster and use less
-    memory for compiler.
-*/
-#define internal static     // internal function
+// This include allowes the use of variadic functions.
+// It is a 0 cost abstraction that defines a couple of macros.
+// NOTE: It is not part of the stdlib.
+#include <stdarg.h>
 
-#define constptr const
-#define modtptr             // Modifiable Pointer marker macro
+#define global_variable static  // Defined Global Variable marker macro
+#define constptr const          // Constant Pointer marker macro
+#define modtptr                 // Modifiable Pointer marker macro
 
 typedef signed char i8;
 typedef signed short int i16;
@@ -36,8 +30,6 @@ typedef i8 bool8;
 #define false 0
 #define null 0
 #define term_char '\0'
-
-#define PI32 3.14159265359f
 
 #define STDIN 0
 #define STDOUT 1

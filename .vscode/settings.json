@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.edf": "html",
         "array": "cpp",
         "atomic": "cpp",
         "strstream": "cpp",
@@ -57,6 +58,7 @@
         "syscall_table.h": "c",
         "allocator.h": "c",
         "debug.h": "c",
-        "syscalls.h": "c"
+        "syscalls.h": "c",
+        "integers.h": "c"
     }
 }

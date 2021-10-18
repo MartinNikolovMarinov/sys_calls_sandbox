@@ -1,28 +1,30 @@
-#ifndef ERR_H
-#define ERR_H 1
+// TODO: RE-IMPLEMENT
 
-#include "types.h"
-#include "str.h"
+// #ifndef ERR_H
+// #define ERR_H 1
 
-/* Slow Error Handling: */
+// #include "types.h"
+// #include "str.h"
 
-typedef struct Error {
-    i32 errorCode;
-    String *msg;
-} Error;
+// /* Slow Error Handling: */
 
-Error makeErr(i32 code, char *raw);
-Error makeErrStr(i32 code, String *msg);
-Error makeSuccess();
-bool8 isSuccess(Error e);
+// typedef struct Error {
+//     i32 errorCode;
+//     String *msg;
+// } Error;
 
-/* FAST Error handling: */
+// Error makeErr(i32 code, char *raw);
+// Error makeErrStr(i32 code, String *msg);
+// Error makeSuccess();
+// bool8 isSuccess(Error e);
 
-typedef enum syserr {
-    SUCCESS = 0,
-    ENOMEM = 12
-} syserr;
+// /* FAST Error handling: */
 
-constptr char* syserrMsg(syserr e);
+// typedef enum syserr {
+//     SUCCESS = 0,
+//     ENOMEM = 12
+// } syserr;
 
-#endif
+// constptr char* syserrMsg(syserr e);
+
+// #endif

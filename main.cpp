@@ -8,18 +8,21 @@
 // #include "src/err.h"
 // #include "src/print.h"
 // #include "src/arr.h"
-
-// TODO: how is this possible ?
-// #define get_string(n) #n
-// char* p = get_string(Testing);
+#include "src/str.h"
 
 i32 main(i32 argc, char** argv, char **envp)
 {
-    i32 a = 2;
-    i32 b = 3;
-    assert(a == b, "boom tres pres!");
+    String s1((modtptr char*)"dog");
+    String s2((modtptr char*)" ");
+    String s3((modtptr char*)"fat");
 
-    // TODO2: Start with implementing basic safe types and re-write everything with some limited cpp features.
+    char buf[200] = {};
+    String out(buf, 0, 200);
+
+    StrConcat(&out, &s1, &s2, &s3, null);
+
+    i32 a = 2;
+    assertm(false, "crash");
 
     // TODO: make some structure to hold passed arguments.
     // char buf[10];

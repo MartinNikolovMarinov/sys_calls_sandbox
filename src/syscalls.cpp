@@ -1,5 +1,7 @@
 #include "syscalls.h"
 
+// TODO: Double check types for
+
 u64 syswrite(i64 fd, void *data, u64 nbytes)
 {
     u64 res = (u64)syscall(SYSCALL_write,
