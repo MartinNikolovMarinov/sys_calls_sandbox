@@ -1,9 +1,10 @@
-CC            = gcc
-CFLAGS        = -O0 -g -Wall -nostdlib -Wno-unused
-PROD_CFLAGS   = -O3 -nostdlib
+CC            = g++
+COMMON_CFLAGS = -nostdlib -fno-exceptions
+CFLAGS        = $(COMMON_CFLAGS) -O0 -g -Wall -Wno-unused
+PROD_CFLAGS   = $(COMMON_CFLAGS) -O3
 DEBUG_DEFINES = -DDEBUG=1
 PROD_DEFINES  = -DDEBUG=0
-SRC           = $(shell find . -name "*.c")
+SRC           = $(shell find . -name "*.cpp")
 OUT_DIR       = ./build
 BIN_NAME      = main
 # LIBS         = -lm

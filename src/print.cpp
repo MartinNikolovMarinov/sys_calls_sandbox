@@ -4,11 +4,11 @@ Error printRawStr(char *str, u64 len) {
     if (len == 0) {
         len = rawStrLen(str);
     }
-    i64 wrote = syswrite(STDOUT, str, len);
+    u64 wrote = syswrite(STDOUT, str, len);
     if (wrote < 0) {
-        return makeErr(-1, "write failed");
+        return makeErr(-1, (char*)"write failed");
     } else if (wrote != len) {
-        return makeErr(-2, "short write");
+        return makeErr(-2, (char*)"short write");
     }
 
     return makeSuccess();

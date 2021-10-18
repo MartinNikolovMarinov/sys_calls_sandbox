@@ -23,4 +23,6 @@ typedef enum syserr {
     ENOMEM = 12
 } syserr;
 
+constptr char* syserrMsg(syserr e);
+
 #endif

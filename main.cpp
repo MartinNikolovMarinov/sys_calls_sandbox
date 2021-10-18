@@ -1,24 +1,13 @@
-#include "src/syscall_table.h"
+// #include "src/syscall_table.h"
 #include "src/types.h"
-#include "src/syscalls.h"
-#include "src/raw_str.h"
-#include "src/integers.h"
-#include "src/allocator.h"
+// #include "src/syscalls.h"
+// #include "src/raw_str.h"
+// #include "src/integers.h"
+// #include "src/allocator.h"
 #include "src/debug.h"
-#include "src/err.h"
-#include "src/print.h"
-#include "src/arr.h"
-
-// TODO: Use this example macro to implement generic internal structures, like Array:
-#define MAKE_ADDFN(TYPE)                                    \
-TYPE add_##TYPE (TYPE a, TYPE b){                           \
-    TYPE ret = a + b;                                       \
-    return ret;                                             \
-}
-
-MAKE_ADDFN(i32);
-MAKE_ADDFN(f32);
-MAKE_ADDFN(f64);
+// #include "src/err.h"
+// #include "src/print.h"
+// #include "src/arr.h"
 
 // TODO: how is this possible ?
 // #define get_string(n) #n
@@ -26,7 +15,11 @@ MAKE_ADDFN(f64);
 
 i32 main(i32 argc, char** argv, char **envp)
 {
-    // TODO2: Start with implementing basic safe types.
+    i32 a = 2;
+    i32 b = 3;
+    assert(a == b, "boom tres pres!");
+
+    // TODO2: Start with implementing basic safe types and re-write everything with some limited cpp features.
 
     // TODO: make some structure to hold passed arguments.
     // char buf[10];
@@ -104,8 +97,5 @@ i32 main(i32 argc, char** argv, char **envp)
     // p = arrGetAt(&arr, 4);
     // v = *((int*)p);
 
-    i32 a = add_i32(1, 2);
-    f32 b = add_f32(1.1, 2.4);
-    assert(a == 10, "uf bad hmm ?");
     return 0;
 }

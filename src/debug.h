@@ -6,7 +6,7 @@
     #include "types.h"
     #include "raw_str.h"
 
-    void __assertFailedHandler(char *file, i32 line, char* expr, char* failMsg);
+    void __assertFailedHandler(constptr char *file, i32 line, constptr char* expr, constptr char* failMsg);
 
     #define assert(expr, failMsg)                                           \
         if (!(expr))                                                        \

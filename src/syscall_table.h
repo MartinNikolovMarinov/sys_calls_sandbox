@@ -1,14 +1,28 @@
 #ifndef SYSCALL_TABLE_H
 #define SYSCALL_TABLE_H 1
 
-void* syscall(
-    int syscall_number,
-    void* param1,
-    void* param2,
-    void* param3,
-    void* param4,
-    void* param5
-);
+#ifdef __cplusplus
+    extern "C" {
+        extern void* syscall(
+            int syscall_number,
+            void* param1,
+            void* param2,
+            void* param3,
+            void* param4,
+            void* param5
+        );
+    }
+#else
+    void* syscall(
+        int syscall_number,
+        void* param1,
+        void* param2,
+        void* param3,
+        void* param4,
+        void* param5
+    );
+#endif
+
 
 #define SYSCALL_read 0
 #define SYSCALL_write 1

@@ -13,23 +13,23 @@ i32 initMemPool() {
 void* allocate(i64 n) {
     assert(n > 0, "n must be positive");
     void *old = currBrk;
-    void *new = sysbrk(currBrk + n);
-    if (new == currBrk || new < 0) return (void*)-1;
-    currBrk = new;
+    void *newBrk = sysbrk((char*)currBrk + n);
+    if (newBrk == currBrk || newBrk < 0) return (void*)-1;
+    currBrk = newBrk;
     return old;
 }
 
 i32 deallocate(i64 n) {
     assert(n > 0, "n must be positive");
-    assert(currBrk - n >= startBrk, "trying to deallocated past the startBrk");
-    void *new = sysbrk(currBrk - n);
-    if (new < 0) return -1;
-    currBrk = new;
+    assert((char*)currBrk - n >= startBrk, "trying to deallocated past the startBrk");
+    void *newBrk = sysbrk((char*)currBrk - n);
+    if (newBrk < 0) return -1;
+    currBrk = newBrk;
     return 0;
 }
 
 i64 bytesAllocated() {
-    i64 bytesAllocated = (i64)(currBrk - startBrk);
+    i64 bytesAllocated = (i64)((char*)currBrk - (char*)startBrk);
     return bytesAllocated;
 }
 

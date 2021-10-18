@@ -6,7 +6,7 @@ String strMake(char* buff, i64 size, i64 cap) {
     assert(cap >= 0, "cap can't be less than 0");
     assert(cap >= size, "cap must be greater than or equal to size");
 
-    String ret = { ._data = buff, ._size = size, ._cap = cap };
+    String ret = { ._size = size, ._cap = cap, ._data = buff, };
     return ret;
 }
 
@@ -15,7 +15,7 @@ String strMakeFromCharPtr(char* buff) {
     i64 len = rawStrLen(buff);
     assert(len > 0, "len can't be null");
 
-    String ret = { ._data = buff, ._size = len, ._cap = len };
+    String ret = { ._size = len, ._cap = len, ._data = buff, };
     return ret;
 }
 

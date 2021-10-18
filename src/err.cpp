@@ -21,7 +21,7 @@ bool8 isSuccess(Error e) {
     return ret;
 }
 
-char* syserrMsg(syserr e) {
+constptr char* syserrMsg(syserr e) {
     switch (e) {
         case SUCCESS: return "Success";
         case ENOMEM: return "Not enough space/cannot allocate memory";

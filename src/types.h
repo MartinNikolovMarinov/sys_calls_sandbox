@@ -1,8 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H 1
 
-#define local_persist static;
-#define global_variable static;
+#define local_persist static
+#define global_variable static
 /*
     IMPORTANT: (UNITY BUILD)
     If you don't mark a functions static, then the compiler needs to put it in a
@@ -11,7 +11,10 @@
     of this special symbol table. This will make compilation faster and use less
     memory for compiler.
 */
-#define internal static; // internal function
+#define internal static     // internal function
+
+#define constptr const
+#define modtptr             // Modifiable Pointer marker macro
 
 typedef signed char i8;
 typedef signed short int i16;

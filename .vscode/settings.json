@@ -1,6 +1,5 @@
 {
     "files.associations": {
-        "*.edf": "html",
         "array": "cpp",
         "atomic": "cpp",
         "strstream": "cpp",
