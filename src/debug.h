@@ -6,11 +6,11 @@
     #include "types.h"
     #include "raw_str.h"
 
-    void __assertFailedHandler(char *file, i32 line, char* failMsg);
+    void __assertFailedHandler(char *file, i32 line, char* expr, char* failMsg);
 
     #define assert(expr, failMsg)                                           \
         if (!(expr))                                                        \
-            __assertFailedHandler(__FILE__, __LINE__, failMsg)
+            __assertFailedHandler(__FILE__, __LINE__, #expr, failMsg)
 #else
     #define assert(expr)
 #endif

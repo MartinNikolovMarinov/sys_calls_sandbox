@@ -20,6 +20,10 @@ MAKE_ADDFN(i32);
 MAKE_ADDFN(f32);
 MAKE_ADDFN(f64);
 
+// TODO: how is this possible ?
+// #define get_string(n) #n
+// char* p = get_string(Testing);
+
 i32 main(i32 argc, char** argv, char **envp)
 {
     // TODO2: Start with implementing basic safe types.
@@ -102,5 +106,6 @@ i32 main(i32 argc, char** argv, char **envp)
 
     i32 a = add_i32(1, 2);
     f32 b = add_f32(1.1, 2.4);
+    assert(a == 10, "uf bad hmm ?");
     return 0;
 }
