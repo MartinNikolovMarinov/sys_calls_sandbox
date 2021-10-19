@@ -10,8 +10,6 @@
 // #include "src/arr.h"
 #include "src/str.h"
 
-static i32 staticCrash = (*(int *)0) = 0;
-
 i32 main(i32 argc, char** argv, char **envp)
 {
     String s1((modtptr char*)"dog");

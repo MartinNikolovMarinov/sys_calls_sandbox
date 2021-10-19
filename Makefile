@@ -4,8 +4,9 @@ CFLAGS        = $(COMMON_CFLAGS) -O0 -g -Wall -Wno-unused
 PROD_CFLAGS   = $(COMMON_CFLAGS) -O3
 DEBUG_DEFINES = -DDEBUG=1
 PROD_DEFINES  = -DDEBUG=0
-SRC           = $(shell find . -name "*.cpp")
-OUT_DIR       = ./build
+SRC           = main.cpp $(shell find ./src/ -name "*.cpp")
+TEST_SRC      = test/test_main.cpp $(shell find ./src/ -name "*.cpp")
+OUT_DIR       = build
 BIN_NAME      = main
 BOOTSTRAP_ASM = assm_bootstrap_linux_x86_64.S
 # LIBS         = -lm
@@ -23,18 +24,24 @@ build: ## Build the project in the build folder. Creates ./build folder if it do
 	mkdir -p $(OUT_DIR)
 	$(CC) $(CFLAGS) $(DEBUG_DEFINES) $(BOOTSTRAP_ASM) -o $(OUT_DIR)/$(BIN_NAME) $(SRC)
 
-.PHONY: run
-run: build ## Builds and starts the binary.
-	mkdir -p $(OUT_DIR)
-	$(OUT_DIR)/$(BIN_NAME)
-
 .PHONY: build_prod
-build_prod: clean build ## Same as build, but optimizes aggresivly and generates no debug information.
+build_prod: clean ## Same as build, but optimizes aggresivly and generates no debug information.
+	mkdir -p $(OUT_DIR)
 	$(CC) $(PROD_CFLAGS) $(PROD_ENV) $(BOOTSTRAP_ASM) -o $(OUT_DIR)/$(BIN_NAME) $(SRC)
 
+.PHONY: run
+run: build ## Build binaries and run them.
+	$(OUT_DIR)/$(BIN_NAME)
+
 .PHONY: generate_asm
-generate_asm: ## Uses objdump -S to generate asm from the binary. Expects the output dinaries to be generated first by other make targets.
+generate_asm: ## Uses objdump -S to generate asm from the binary. Expects the output binaries to be generated first by other make targets.
 	objdump -M intel -S $(OUT_DIR)/$(BIN_NAME) > $(OUT_DIR)/$(BIN_NAME).S
+
+.PHONY: test
+test: clean ## Build test binaries and run tests.
+	mkdir -p $(OUT_DIR)
+	$(CC) $(CFLAGS) $(DEBUG_DEFINES) $(BOOTSTRAP_ASM) -o $(OUT_DIR)/$(BIN_NAME)_test $(TEST_SRC)
+	$(OUT_DIR)/$(BIN_NAME)_test
 
 .PHONY: clean
 clean: ## Deletes the build folder.
