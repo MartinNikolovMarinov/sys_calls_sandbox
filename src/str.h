@@ -15,14 +15,14 @@ public:
     i32 Size();
     i32 Cap();
     void SetAt(i32 _i, char _v);
-    void SetAt(String* _other, i32 _i);
+    void SetAt(constptr String* _other, i32 _i);
     void Add(char v);
-    void Add(String* _other);
+    void Add(constptr String* _other);
 private:
     i32 size, cap;
     char* data;
 };
 
-void StrConcat(modtptr String *out, constptr String *strs...);
+void StrConcat(modtptr String *_out, constptr String *_strs...);
 
 #endif

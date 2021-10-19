@@ -2,11 +2,10 @@
 #define DEBUG_H 1
 
 #if defined(DEBUG) && (DEBUG == 1)
-    #include "syscalls.h"
-    #include "types.h"
+    #include "platform.h"
     #include "raw_str.h"
 
-    void __assertFailedHandler(constptr char *file, i32 line, constptr char* expr, constptr char* failMsg);
+    void __assertFailedHandler(constptr char *_file, i32 _line, constptr char *_expr, constptr char *_failMsg);
 
     #define assert(expr)                                                    \
         if (!(expr))                                                        \
@@ -17,6 +16,8 @@
             __assertFailedHandler(__FILE__, __LINE__, #expr, errMsg)
 #else
     #define assert(expr)
+    #define assertm(expr, errMsg)
 #endif
+
 
 #endif

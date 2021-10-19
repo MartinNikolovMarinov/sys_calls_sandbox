@@ -3,8 +3,14 @@
 
 // This include allowes the use of variadic functions.
 // It is a 0 cost abstraction that defines a couple of macros.
-// NOTE: It is not part of the stdlib.
+// NOTE: It is not part of stdlib.
 #include <stdarg.h>
+
+/*
+    IMPORTANT:
+    It's best to avoid adding any includes to this file to avoid cyclic dependencies,
+    because it is literarily included in every other file.
+*/
 
 #define global_variable static  // Defined Global Variable marker macro
 #define constptr const          // Constant Pointer marker macro

@@ -59,6 +59,8 @@
         "allocator.h": "c",
         "debug.h": "c",
         "syscalls.h": "c",
-        "integers.h": "c"
+        "integers.h": "c",
+        "unistd_64.h": "c",
+        "platform.h": "c"
     }
 }

@@ -1,26 +1,12 @@
-#ifndef SYSCALL_TABLE_H
-#define SYSCALL_TABLE_H 1
+#ifndef UNIX_SYSCALL_TABLE_H
+#define UNIX_SYSCALL_TABLE_H 1
 
 #ifdef __cplusplus
     extern "C" {
-        void* syscall(
-            int syscall_number,
-            void* param1,
-            void* param2,
-            void* param3,
-            void* param4,
-            void* param5
-        );
+        void* syscall(int syscall_number, void* param1, void* param2, void* param3, void* param4, void* param5);
     }
 #else
-    void* syscall(
-        int syscall_number,
-        void* param1,
-        void* param2,
-        void* param3,
-        void* param4,
-        void* param5
-    );
+    void* syscall(int syscall_number, void* param1, void* param2, void* param3, void* param4, void* param5);
 #endif
 
 #define SYSCALL_read 0
@@ -371,4 +357,4 @@
 #define SYSCALL_pidfd_open 434
 #define SYSCALL_clone3 435
 
-#endif /* SYSCALL_TABLE_H */
+#endif

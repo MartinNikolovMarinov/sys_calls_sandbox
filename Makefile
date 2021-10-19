@@ -7,6 +7,7 @@ PROD_DEFINES  = -DDEBUG=0
 SRC           = $(shell find . -name "*.cpp")
 OUT_DIR       = ./build
 BIN_NAME      = main
+BOOTSTRAP_ASM = assm_bootstrap_linux_x86_64.S
 # LIBS         = -lm
 # HEADERS      = /usr/include/SDL2
 
@@ -20,7 +21,7 @@ help:
 .PHONY: build
 build: ## Build the project in the build folder. Creates ./build folder if it does not exist.
 	mkdir -p $(OUT_DIR)
-	$(CC) $(CFLAGS) $(DEBUG_DEFINES) assm_bootstrap.S -o $(OUT_DIR)/$(BIN_NAME) $(SRC)
+	$(CC) $(CFLAGS) $(DEBUG_DEFINES) $(BOOTSTRAP_ASM) -o $(OUT_DIR)/$(BIN_NAME) $(SRC)
 
 .PHONY: run
 run: build ## Builds and starts the binary.
@@ -29,7 +30,7 @@ run: build ## Builds and starts the binary.
 
 .PHONY: build_prod
 build_prod: clean build ## Same as build, but optimizes aggresivly and generates no debug information.
-	$(CC) $(PROD_CFLAGS) $(PROD_ENV) assm_bootstrap.S -o $(OUT_DIR)/$(BIN_NAME) $(SRC)
+	$(CC) $(PROD_CFLAGS) $(PROD_ENV) $(BOOTSTRAP_ASM) -o $(OUT_DIR)/$(BIN_NAME) $(SRC)
 
 .PHONY: generate_asm
 generate_asm: ## Uses objdump -S to generate asm from the binary. Expects the output dinaries to be generated first by other make targets.

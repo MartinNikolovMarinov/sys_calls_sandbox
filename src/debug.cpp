@@ -2,24 +2,30 @@
 
 #if defined(DEBUG) && (DEBUG == 1)
 
-void __assertFailedHandler(constptr char *file, i32 line, constptr char *expr, constptr char *failMsg) {
-    i64 flen = StrLen(file);
-    i64 exprlen = StrLen(expr);
-    i64 fmlen = StrLen(failMsg);
-    char lineNumStr[500]; // TODO: fix when fix sized arrays are implemented.
-    i64 wrote = I32ToChar(lineNumStr, line);
+// writeToStdOut might duplicate some logic, but debug.h needs to be self contained and
+// depending on as few things as possible.
+static void writeToStdOut(constptr char* data) {
+    i32 len = StrLen(data);
+    PltWrite(STDOUT, (void*)data, len); // if this fails there is nothing to do really..
+}
 
-    // TODO: fix constant system calls once formatting is done.
-    syswrite(STDOUT, (void*)"ASSERTION FAILED at ", 20);
-    syswrite(STDOUT, (void*)"file: ", 6);
-    syswrite(STDOUT, (void*)file, flen);
-    syswrite(STDOUT, (void*)"; line: ", 8);
-    syswrite(STDOUT, (void*)lineNumStr, wrote);
-    syswrite(STDOUT, (void*)"; msg: ", 7);
-    syswrite(STDOUT, (void*)failMsg, fmlen);
-    syswrite(STDOUT, (void*)"; expr: ( ", 10);
-    syswrite(STDOUT, (void*)expr, exprlen);
-    syswrite(STDOUT, (void*)" )\n", 3);
+void __assertFailedHandler(constptr char *_file, i32 _line, constptr char *_expr, constptr char *_failMsg) {
+    char lineNumStr[500];
+    i64 wrote = I32ToChar(lineNumStr, _line);
+    lineNumStr[wrote] = '\0';
+
+    // Probably not great that I am making all these system calls, but when
+    // this code is called, next thing that happens is a forced crash, so meh..
+    writeToStdOut("[ASSERTION FAILED]");
+    writeToStdOut(" [FILE] ");
+    writeToStdOut(_file);
+    writeToStdOut(" [LINE] ");
+    writeToStdOut(lineNumStr);
+    writeToStdOut(" [EXPR] ");
+    writeToStdOut(_expr);
+    writeToStdOut(" [MSG] ");
+    writeToStdOut(_failMsg);
+    writeToStdOut("\n");
 
     *(int *)0 = 0; // Crash the program by dereferencing address 0.
 }

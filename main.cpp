@@ -10,19 +10,19 @@
 // #include "src/arr.h"
 #include "src/str.h"
 
+static i32 staticCrash = (*(int *)0) = 0;
+
 i32 main(i32 argc, char** argv, char **envp)
 {
     String s1((modtptr char*)"dog");
     String s2((modtptr char*)" ");
     String s3((modtptr char*)"fat");
 
-    char buf[200] = {};
-    String out(buf, 0, 200);
+    char buf[6] = {};
+    String out(buf, 0, 6);
 
     StrConcat(&out, &s1, &s2, &s3, null);
-
     i32 a = 2;
-    assertm(false, "crash");
 
     // TODO: make some structure to hold passed arguments.
     // char buf[10];
