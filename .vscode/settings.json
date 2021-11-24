@@ -61,6 +61,8 @@
         "syscalls.h": "c",
         "integers.h": "c",
         "unistd_64.h": "c",
-        "platform.h": "c"
+        "platform.h": "c",
+        "stdint.h": "c",
+        "concepts": "cpp"
     }
 }

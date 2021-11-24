@@ -1,26 +1,47 @@
-// #include "src/syscall_table.h"
+#include "src/util.h"
 #include "src/types.h"
-// #include "src/syscalls.h"
-// #include "src/raw_str.h"
-// #include "src/integers.h"
-// #include "src/allocator.h"
-#include "src/debug.h"
-// #include "src/err.h"
-// #include "src/print.h"
-// #include "src/arr.h"
-#include "src/str.h"
+#include "src/raw_str.h"
+#include "src/platform.h"
+#include "src/allocator.h"
+
+// void* alloc(mem_index size) {
+
+// }
+
+inline size_t allocSize(size_t size) {
+  return size + sizeof(Block) - sizeof(void*);
+}
 
 i32 main(i32 argc, char** argv, char **envp)
 {
-    String s1((modtptr char*)"dog");
-    String s2((modtptr char*)" ");
-    String s3((modtptr char*)"fat");
+    Block b;
+    char out[100];
+    i64 wrote = I64ToChar(out, AlignToMachineWord(1235123));
+    PltWrite(STDOUT, out, wrote);
+    PltWrite(STDOUT, "\n", 1);
 
-    char buf[6] = {};
-    String out(buf, 0, 6);
+    //i16 s3 = sizeof global_arr_big;
+    // int t = global_func(argc);
+    // t += global_arr[7];
+    // t += static_arr[7];
+    // t += global_arr_big[7];
+    // t += static_arr_big[7];
 
-    StrConcat(&out, &s1, &s2, &s3, null);
-    i32 a = 2;
+    // const i32 N = 100;
+    // int numbers[N];
+    // for (i32 ndx = 0; ndx < N; ++ndx)
+    //     numbers[ndx] = ndx;
+
+    // i32 size = __SIZE_MAX__;
+    // char largestBuff[100000000];
+    // i64 size1 = sizeof largestBuff;
+    // i32 size2 = sizeof largestBuff;
+    // u64 size3 = sizeof largestBuff;
+    // u32 size4 = sizeof largestBuff;
+    // u16 size5 = sizeof largestBuff;
+
+    // i32 wrote = I32ToChar(sizeAsCharPtr, size);
+    // wrote = PltWrite(STDOUT, sizeAsCharPtr, wrote);
 
     // TODO: make some structure to hold passed arguments.
     // char buf[10];

@@ -6,6 +6,11 @@
 // NOTE: It is not part of stdlib.
 #include <stdarg.h>
 
+// Include system defaults.
+// NOTE: These are not part of stdlib.
+#include <stdint.h>
+#include <stddef.h>
+
 /*
     IMPORTANT:
     It's best to avoid adding any includes to this file to avoid cyclic dependencies,
@@ -16,20 +21,23 @@
 #define constptr const          // Constant Pointer marker macro
 #define modtptr                 // Modifiable Pointer marker macro
 
-typedef signed char i8;
-typedef signed short int i16;
-typedef signed int i32;
-typedef signed long int i64;
+typedef int8_t i8;
+typedef int16_t i16;
+typedef int32_t i32;
+typedef int64_t i64;
 
-typedef unsigned char u8;
-typedef unsigned short int u16;
-typedef unsigned int u32;
-typedef unsigned long int u64;
+typedef uint8_t u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+typedef uint64_t u64;
 
 typedef float f32;
 typedef long double f64;
 
 typedef i8 bool8;
+
+// Pointer size specific types:
+typedef size_t mem_index;
 
 // Special constants :
 #define true 1
