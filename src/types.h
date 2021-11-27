@@ -31,10 +31,13 @@ typedef uint16_t u16;
 typedef uint32_t u32;
 typedef uint64_t u64;
 
+typedef u8 byte;
+
 typedef float f32;
 typedef long double f64;
 
-typedef i8 bool8;
+typedef u8 bool8;
+typedef u32 bool32;
 
 // Pointer size specific types:
 typedef size_t mem_index;

@@ -1,36 +1,37 @@
-#include "src/util.h"
 #include "src/types.h"
 #include "src/raw_str.h"
 #include "src/platform.h"
-#include "src/allocator.h"
-
-// void* alloc(mem_index size) {
-
-// }
-
-inline size_t allocSize(size_t size) {
-  return size + sizeof(Block) - sizeof(void*);
-}
+#include "src/allocators/bump_allocator.h"
+#include "src/err.h"
 
 i32 main(i32 argc, char** argv, char **envp)
 {
-    Block b;
-    char out[100];
-    i64 wrote = I64ToChar(out, AlignToMachineWord(1235123));
-    PltWrite(STDOUT, out, wrote);
-    PltWrite(STDOUT, "\n", 1);
+    BumpAllocator ba;
+    i64 *v1 = (i64*)ba.Allocate(16);
+    MemBlock *memblock1 = GetMemBlock(v1);
+    i32 *v2 = (i32*)ba.Allocate(4);
+    MemBlock *memblock2 = GetMemBlock(v2);
 
-    //i16 s3 = sizeof global_arr_big;
-    // int t = global_func(argc);
-    // t += global_arr[7];
-    // t += static_arr[7];
-    // t += global_arr_big[7];
-    // t += static_arr_big[7];
+    *v1 = INT64_MAX;
+    *v2 = INT32_MAX;
 
-    // const i32 N = 100;
-    // int numbers[N];
-    // for (i32 ndx = 0; ndx < N; ++ndx)
-    //     numbers[ndx] = ndx;
+    i32 ret;
+    ret = ba.DeallocateTopBlock();
+    memblock1 = GetMemBlock(v1);
+    ret = ba.DeallocateTopBlock();
+    ret = ba.DeallocateTopBlock();
+
+    v2 = (i32*)ba.Allocate(4);
+    v1 = (i64*)ba.Allocate(8);
+
+    *v1 = INT64_MAX;
+    *v2 = INT32_MAX;
+
+    // Block b;
+    // char out[100];
+    // i64 wrote = I64ToChar(out, 8*4 - sizeof(void*));
+    // PltWrite(STDOUT, out, wrote);
+    // PltWrite(STDOUT, "\n", 1);
 
     // i32 size = __SIZE_MAX__;
     // char largestBuff[100000000];

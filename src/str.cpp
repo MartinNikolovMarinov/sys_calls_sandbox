@@ -1,6 +1,7 @@
 #include "str.h"
 
-void StrConcat(modtptr String *_out, constptr String *_strs...) {
+void StrConcat(modtptr String *_out, constptr String *_strs...)
+{
     assert(_out != null);
 
     va_list va;
@@ -16,7 +17,8 @@ void StrConcat(modtptr String *_out, constptr String *_strs...) {
     return;
 }
 
-String::String(modtptr char* _raw) {
+String::String(modtptr char* _raw)
+{
     assert(_raw != null);
 
     u64 len = StrLen(_raw);
@@ -25,7 +27,8 @@ String::String(modtptr char* _raw) {
     this->data = _raw;
 }
 
-String::String(modtptr char* _raw, i64 _size, i64 _cap) {
+String::String(modtptr char* _raw, i64 _size, i64 _cap)
+{
     assert(_raw != null);
     assert(_size >= 0);
     assert(_cap >= 0);
@@ -36,7 +39,8 @@ String::String(modtptr char* _raw, i64 _size, i64 _cap) {
     this->data = _raw;
 }
 
-String::String(modtptr String* _other) {
+String::String(modtptr String* _other)
+{
     assert(_other != null);
     assert(_other->data != null);
 
@@ -48,13 +52,15 @@ String::String(modtptr String* _other) {
 i32 String::Cap()  { return this->cap;  }
 i32 String::Size() { return this->size; }
 
-void String::SetAt(i32 _index, char _v) {
+void String::SetAt(i32 _index, char _v)
+{
     assertm((0 < _index && _index < this->size), "_index argument is in an invalid range");
 
     this->data[_index] = _v;
 }
 
-void String::SetAt(constptr String* _other, i32 _index) {
+void String::SetAt(constptr String* _other, i32 _index)
+{
     assert(_other != null);
     assertm((0 < _index && _index < this->size), "_index argument is in an invalid range");
     assertm((this->size + _index + _other->size >= this->cap), "not enough capacity to add _other string at _index");
@@ -65,14 +71,16 @@ void String::SetAt(constptr String* _other, i32 _index) {
     }
 }
 
-void String::Add(char _v) {
+void String::Add(char _v)
+{
     assertm((this->size + 1 <= this->cap), "trying to add a character past capacity");
 
     this->data[this->size] = _v;
     this->size++;
 }
 
-void String::Add(constptr String *_other) {
+void String::Add(constptr String *_other)
+{
     assert(_other != null);
     assertm((this->size + _other->size <= this->cap), "trying to add a string past capacity");
 

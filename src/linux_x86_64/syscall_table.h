@@ -1,5 +1,5 @@
-#ifndef UNIX_SYSCALL_TABLE_H
-#define UNIX_SYSCALL_TABLE_H 1
+#ifndef LINUX_SYSCALL_TABLE_H
+#define LINUX_SYSCALL_TABLE_H 1
 
 #ifdef __cplusplus
     extern "C" {

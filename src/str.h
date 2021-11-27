@@ -16,7 +16,7 @@ public:
     i32 Cap();
     void SetAt(i32 _i, char _v);
     void SetAt(constptr String* _other, i32 _i);
-    void Add(char v);
+    void Add(char _v);
     void Add(constptr String* _other);
 private:
     i32 size, cap;
