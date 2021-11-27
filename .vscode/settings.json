@@ -63,6 +63,8 @@
         "unistd_64.h": "c",
         "platform.h": "c",
         "stdint.h": "c",
-        "concepts": "cpp"
+        "concepts": "cpp",
+        "error.h": "c",
+        "optional.h": "c"
     }
 }

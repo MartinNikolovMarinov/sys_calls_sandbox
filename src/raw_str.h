@@ -4,6 +4,7 @@
 #include "types.h"
 #include "math.h"
 #include "integers.h"
+#include "debug.h"
 
 u64 StrLen(constptr char* _p);
 i64 I32ToChar(modtptr char* _out, i32 _n);

@@ -65,8 +65,7 @@ void String::SetAt(constptr String* _other, i32 _index)
     assertm((0 < _index && _index < this->size), "_index argument is in an invalid range");
     assertm((this->size + _index + _other->size >= this->cap), "not enough capacity to add _other string at _index");
 
-    for (i64 i = 0; i < _other->size; i++)
-    {
+    for (i64 i = 0; i < _other->size; i++) {
         this->data[i + this->size + _index] = _other->data[i];
     }
 }
@@ -85,8 +84,7 @@ void String::Add(constptr String *_other)
     assertm((this->size + _other->size <= this->cap), "trying to add a string past capacity");
 
     i32 i = 0;
-    while (i < _other->size)
-    {
+    while (i < _other->size) {
         this->data[i + this->size] = _other->data[i];
         i++;
     }

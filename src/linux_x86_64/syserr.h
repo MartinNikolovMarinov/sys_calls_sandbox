@@ -3,12 +3,11 @@
 
 #include "../types.h"
 
-/* FAST Error handling: */
 typedef enum syserr {
     SUCCESS = 0,
     ENOMEM = 12
 } syserr;
 
-constptr char* syserrMsg(syserr _e);
+constptr char* TranslateSysError(syserr _e);
 
 #endif

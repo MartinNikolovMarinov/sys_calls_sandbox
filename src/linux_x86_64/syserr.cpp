@@ -1,6 +1,6 @@
 #include "syserr.h"
 
-constptr char* syserrMsg(syserr _e)
+constptr char* TranslateSysError(syserr _e)
 {
     switch (_e) {
         case SUCCESS: return "Success";

@@ -50,14 +50,14 @@ public:
 
         Returns a pointer to the payload.
     */
-    void* Allocate(mem_index _size);
+    Optional<void*> Allocate(mem_index _size);
 
     /*
         Deallocates the last allocated block.
 
         Returns 0 if successful, or a negative number if somthing failed.
     */
-    i32 DeallocateTopBlock();
+    Optional<bool8> DeallocateTopBlock();
 private:
     /*
         Requests memory from the OS for the payload + the size of the memory block header.
@@ -65,7 +65,7 @@ private:
         Returns a pointer to the allocated block, or a negative value indicating some error.
         Errors are platform specific.
     */
-    MemBlock* AllocMemoryBlock(mem_index _size);
+    Optional<MemBlock*> AllocMemoryBlock(mem_index _size);
 
     void* memAddr;
     MemBlock* top;

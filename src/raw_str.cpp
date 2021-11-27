@@ -6,10 +6,7 @@ char LeastSignificatDigitI64ToChar(i64 _digit) { return (_digit % 10) + '0'; }
 i64 I32ToChar(char* _out, i32 _n) { return I64ToChar(_out, _n); }
 i64 I64ToChar(char* _out, i64 _n)
 {
-    if (_out == null) {
-        return -1;
-    }
-
+    assert(_out != null);
     i64 wroteDigits = 0;
     i32 dc = DigitCountI64(_n);
     for (i32 i = dc - 1; i >= 0; i--)
@@ -25,10 +22,7 @@ i64 I64ToChar(char* _out, i64 _n)
 
 u64 StrLen(constptr char* _p)
 {
-    if (_p == null) {
-        return 0;
-    }
-
+    assert(_p != null);
     u64 count = 0;
     while (*_p != term_char) {
         _p++;

@@ -1,8 +1,8 @@
 #include "syscalls.h"
 
-u64 syswrite(i64 fd, void *data, u64 nbytes)
+i64 syswrite(i64 fd, void *data, u64 nbytes)
 {
-    u64 res = (u64)syscall(SYSCALL_write,
+    i64 res = (i64)syscall(SYSCALL_write,
                             (void*)fd,
                             (void*)data,
                             (void*)nbytes,

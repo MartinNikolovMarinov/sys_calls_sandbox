@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "debug.h"
+#include "optional.h"
 
 #if __linux__ && __x86_64__
     #include "linux_x86_64/syscalls.h"
@@ -12,9 +13,9 @@
 #endif
 
 // Common OS interface:
-u64 PltWrite(i64 _fd, constptr void *_data, u64 _nbytes);
+Optional<i64> PltWrite(i64 _fd, constptr void *_data, u64 _nbytes);
 void PltExit(i64 _code);
-void* PltBumpAlloc(mem_index _size);
-i32 PltBumpDeallocate(mem_index _n);
+Optional<void*> PltBumpAlloc(mem_index _size);
+Optional<i64> PltBumpDeallocate(mem_index _n);
 
 #endif
