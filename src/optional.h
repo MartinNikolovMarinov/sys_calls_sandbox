@@ -9,6 +9,7 @@ public:
     T val;
     constptr char* err;
 
+    Optional() {}
     Optional(T _val, constptr char* _err) : val(_val), err(_err) {}
 };
 

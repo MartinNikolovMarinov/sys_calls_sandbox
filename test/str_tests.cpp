@@ -1,4 +1,4 @@
-bool8 RunAllStrTests(constptr char* tname) {
+bool8 RunStrBasicTest(constptr char* tname) {
     String s1((modtptr char*)"dog");
     String s2((modtptr char*)" ");
     String s3((modtptr char*)"fat");
@@ -8,8 +8,13 @@ bool8 RunAllStrTests(constptr char* tname) {
 
     StrConcat(&out, &s1, &s2, &s3, null);
 
-    PltWrite(STDOUT, tname, StrLen(tname));
-    PltWrite(STDOUT, " [OK]\n", StrLen(" [OK]\n"));
+    PrintTestOK(tname);
+    return true;
+}
 
+bool8 RunAllStrTests(constptr char* tname) {
+    if (run_test(RunStrBasicTest) != true) {
+        return false;
+    }
     return true;
 }

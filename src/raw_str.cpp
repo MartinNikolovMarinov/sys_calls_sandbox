@@ -31,3 +31,15 @@ u64 StrLen(constptr char* _p)
 
     return count;
 }
+
+i32 StrCmp(constptr char* _a, constptr char* _b)
+{
+    constptr unsigned char *p1 = (constptr unsigned char *)_a;
+    constptr unsigned char *p2 = (constptr unsigned char *)_b;
+    while (*p1 && (*p1 == *p2)) {
+        ++p1;
+        ++p2;
+    }
+
+    return (*p1 > *p2) - (*p2  > *p1);
+}

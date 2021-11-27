@@ -49,7 +49,7 @@
             return Optional<i64>((i64)newBrk, "deallocation failed");
         }
         currBrk = newBrk;
-        return Optional<i64>(0, "");
+        return Optional<i64>(0, null);
     }
 #else
     // not supported platform
