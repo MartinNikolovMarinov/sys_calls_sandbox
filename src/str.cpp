@@ -49,12 +49,17 @@ String::String(modtptr String* _other)
     this->data = _other->data;
 }
 
+void String::Init() {
+    this->cap = 0;
+    this->size = 0;
+}
+
 i32 String::Cap()  { return this->cap;  }
 i32 String::Size() { return this->size; }
 
 void String::SetAt(i32 _index, char _v)
 {
-    assertm((0 < _index && _index < this->size), "_index argument is in an invalid range");
+    assertm((0 <= _index && _index < this->size), "_index argument is in an invalid range");
 
     this->data[_index] = _v;
 }
@@ -89,4 +94,26 @@ void String::Add(constptr String *_other)
         i++;
     }
     this->size += i;
+}
+
+void String::SetData(modtptr char* _ptr, i64 _len) {
+    assert(_ptr != null);
+    if (_len <= 0) {
+        _len = StrLen(_ptr);
+    }
+    assert(this->cap < _len);
+    this->data = _ptr;
+    this->size = _len;
+}
+
+void String::SetTo(constptr char* _ptr, i64 _len) {
+    assert(_ptr != null);
+    if (_len <= 0) {
+        _len = StrLen(_ptr);
+    }
+    assert(this->cap < _len);
+    for (i32 i = 0; i < _len; i++)
+    {
+        this->SetAt(i, _ptr[i]);
+    }
 }

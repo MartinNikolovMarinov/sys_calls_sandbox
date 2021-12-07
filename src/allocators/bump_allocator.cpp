@@ -2,7 +2,7 @@
 
 // TODO: Add thread safety to the allocator.
 
-BumpAllocator::BumpAllocator() : memAddr(null), top(null) {}
+BumpAllocator::BumpAllocator() : bytesAllocated(0), bytesAllocatedWithoutHeaders(0), memAddr(null), top(null) {}
 
 Optional<MemBlock*> BumpAllocator::AllocMemoryBlock(mem_index _size)
 {
@@ -14,11 +14,14 @@ Optional<MemBlock*> BumpAllocator::AllocMemoryBlock(mem_index _size)
     this->memAddr = bumpAllocOpt.val;
 
     MemBlock *block = (MemBlock *)(this->memAddr);
-    byte* startOfPayload = (byte*)this->memAddr + MEM_BLOCK_HEADER_SIZE;
+    byte* startOfPayload = ((byte*)this->memAddr) + MEM_BLOCK_HEADER_SIZE;
     block->payload = startOfPayload;
 
     // advance the memory address to the end of the allocated block:
     this->memAddr = (void*)(startOfPayload + _size);
+    // calculate allocated memory:
+    this->bytesAllocated += _size + MEM_BLOCK_HEADER_SIZE;
+    this->bytesAllocatedWithoutHeaders += _size;
 
     auto ret = Optional<MemBlock*>(block, null);
     return ret;
@@ -49,22 +52,39 @@ Optional<void*> BumpAllocator::Allocate(mem_index _size)
 Optional<bool8> BumpAllocator::DeallocateTopBlock()
 {
     if (this->top != null) {
-        mem_index blockSize = this->top->size + MEM_BLOCK_HEADER_SIZE;
+        mem_index blockDataSize = this->top->size;
+        mem_index blockSize = blockDataSize + MEM_BLOCK_HEADER_SIZE;
         this->top->used = false;
         this->top = this->top->next;
         auto bumpDeallocOpt = PltBumpDeallocate(blockSize);
         if (bumpDeallocOpt.err != null) {
-            // TODO: This is kinda really bad, maybe panic ?
             auto ret = Optional<bool8>(false, bumpDeallocOpt.err);
             return ret;
         }
         // Decrement the memory address to point to the end of the previous memory block:
-        this->memAddr = (void*)((byte*)this->memAddr - blockSize);
+        this->memAddr = (void*)bumpDeallocOpt.val;
+        this->bytesAllocated -= blockSize;
+        this->bytesAllocatedWithoutHeaders -= blockDataSize;
 
         auto ret = Optional<bool8>(true, null);
         return ret;
     }
 
     auto ret = Optional<bool8>(false, "nothing to deallocate");
+    return ret;
+}
+
+Optional<bool8> BumpAllocator::Clear()
+{
+    auto bumpDeallocOpt = PltBumpDeallocate(this->bytesAllocated);
+    if (bumpDeallocOpt.err != null) {
+        auto ret = Optional<bool8>(false, bumpDeallocOpt.err);
+        return ret;
+    }
+
+    this->memAddr = (void*)bumpDeallocOpt.val;
+    this->bytesAllocatedWithoutHeaders = 0;
+    this->bytesAllocated = 0;
+    auto ret = Optional<bool8>(true, null);
     return ret;
 }

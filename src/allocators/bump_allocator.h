@@ -43,6 +43,9 @@ static MemBlock* GetMemBlock(constptr void* _payloadPtr)
 
 class BumpAllocator {
 public:
+    u64 bytesAllocated;
+    u64 bytesAllocatedWithoutHeaders;
+
     BumpAllocator();
 
     /*
@@ -55,9 +58,16 @@ public:
     /*
         Deallocates the last allocated block.
 
-        Returns 0 if successful, or a negative number if somthing failed.
+        Returns optional boolean true on success, or false and some error message on error.
     */
     Optional<bool8> DeallocateTopBlock();
+
+    /*
+        Free up all used memory.
+
+        Returns optional boolean true on success, or false and some error message on error.
+    */
+    Optional<bool8> Clear();
 private:
     /*
         Requests memory from the OS for the payload + the size of the memory block header.
